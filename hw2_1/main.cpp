@@ -25,8 +25,11 @@ int main()
     uLCD.text_width(2); //4X size text
     uLCD.text_height(2);
     uLCD.color(GREEN);
-    int scale = 4;
+    int scale = 1;
     int aval = 1;
+    int sample = 128;
+    int j;
+    float ADCdata[128];
     while(1) {
         aout = 0;
         pwr = 1;
@@ -95,11 +98,6 @@ int main()
                 ThisThread::sleep_for(500ms);
             }
         }
-        /*if (sele.read() == 1)
-            {
-                aval = !aval;
-                ThisThread::sleep_for(1ms);
-            }*/
         if (scale == 7)
         {
             uLCD.printf(" +++++++ ");
@@ -109,25 +107,7 @@ int main()
                 ThisThread::sleep_for(500ms);
             }
         }
-        /*if (scale == 2)
-        {
-            uLCD.printf("++ ");
-        }
-        if (scale == 3)
-        {
-            uLCD.printf("+++");
-        }*/
-        /*if (sele.read() == 1)
-        {
-            ThisThread::sleep_for(500ms);
-            aval = !aval;
-        }*/
-        /*if (aval == 0)
-        {
-            uLCD.color(RED);
-        } else {
-            uLCD.color(GREEN);
-        }*/
+
         if (aval == 0){
             uLCD.color(RED);
             for (float i = 0.0f; i < 1.0f; i += 0.1f) {
@@ -148,20 +128,14 @@ int main()
         } else {
                 uLCD.color(GREEN);
         }
-    }
-
-
-    int sample = 128;
-    int j;
-    float ADCdata[128];
-
-    for (j = 0; j < sample; j++){
-        aout = Ain;
-        ADCdata[j] = Ain;
-        ThisThread::sleep_for(1000ms/sample);
-    }
-    for (j = 0; j < sample; j++){
-        printf("%f\r\n", ADCdata[j]);
-        ThisThread::sleep_for(100ms);
+        for (j = 0; j < sample; j++){
+            aout = Ain;
+            ADCdata[j] = Ain;
+            ThisThread::sleep_for(1000ms/sample);
+        }
+        for (j = 0; j < sample; j++){
+            printf("%f\r\n", ADCdata[j]);
+            ThisThread::sleep_for(100ms);
+        }
     }
 }
